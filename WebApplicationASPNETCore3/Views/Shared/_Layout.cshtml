@@ -1,0 +1,117 @@
+﻿@using Microsoft.AspNetCore.Mvc
+@using System.Text
+@inject CRM.Services.EZAuth AuthService
+@inject CRM.Services.EZSession SessionService
+@{
+    var authInfo = AuthService;
+    var sessionService = SessionService;
+   
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CRM</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link href="~/lib/fontawesome/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+</head>
+<body>
+    <header>
+
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow">
+            <div class="container" style="max-width: 100%; margin: 0;">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CRM</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    @if (authInfo.IsAuthenticated)
+                    {
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item"><a class="nav-link text-white" asp-area="" asp-controller="Campaign" asp-action="Index">Campaign</a></li>
+                            <li class="nav-item"><a class="nav-link text-white" asp-area="" asp-controller="UserManagement" asp-action="Index">User Management</a></li>
+                            <li class="nav-item"><a class="nav-link text-white" asp-area="" asp-controller="Customer" asp-action="Index">Customer</a></li>
+                            <li class="nav-item"><a class="nav-link text-white" asp-area="" asp-controller="TestSideBar" asp-action="Index">TestSideBar</a></li>
+                        </ul>
+                        <ul class="navbar-nav navbar-right">
+
+                            @*<li class="nav-item dropdown nav-user-menu">
+                                    <a href="javascript:void(0);" class="nav-link" data-toggle="dropdown" role="button">
+                                        <img class="user-image img-circle elevation-2" src="~/libs/admin-lte/dist/img/avatar5.png" alt="User Image">
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" asp-controller="Users" asp-action="ChangePassword">
+                                            <i class="fas fa-user-edit"></i>UpdatePassword
+                                        </a>
+                                        <a class="dropdown-item" asp-controller="Account" asp-action="Logout">
+                                            <i class="fas fa-sign-out-alt"></i> Logout
+                                        </a>
+                                    </div>
+                                </li>*@
+                            
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="javascript:void(0);" data-toggle="dropdown" role="button">
+                                        <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                        @authInfo.UserName
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" style="padding:5px">
+                                        <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="form-inline">
+
+                                            <button type="submit" class="btn btn-link navbar-btn navbar-link bg-white">Log out</button>
+                                        </form>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        }
+                        else
+                        {
+
+                            <ul class="navbar-nav navbar-right list-inline ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
+                                </li>
+                            </ul>
+                        }
+                    </div>
+                </div>
+            </nav>
+        </header>
+        @*<div class="container">*@
+                                @*<main role="main">*@
+                                @RenderBody()
+                                @*</main>*@
+                                @*</div>*@
+                                @*<div id="PopoverContent" class="d-none">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Recipient's username"
+                       aria-label="Recipient's username with two button addons" aria-describedby="button-addon1">
+                <div class="input-group-append" id="button-addon1">
+                    <button class="btn btn-outline-primary" type="button" data-toggle="popover" data-placement="bottom"
+                            data-html="true" data-title="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>*@
+
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                Copyright © 2020 CRM. All Rights Reserved
+            </div>
+        </footer>
+
+</body>
+</html>

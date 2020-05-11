@@ -1,0 +1,55 @@
+﻿@{ 
+//Layout = null;
+}
+<style type="text/css">
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+   
+    section {
+        flex-grow: 1;
+        display: flex;
+        height: 0px; /* <== for scrolls in aside */
+        margin-bottom: 60px;
+    }
+
+    aside {
+        width: 100px;
+        min-width: 100px;
+        background: #ccc;
+        overflow: auto;
+        min-height: 0;
+        transition-property: width;
+        transition-duration: 0.2s;
+        transition-timing-function: linear;
+    }
+
+    section main {
+        overflow: auto;
+        flex-grow: 1;
+    }
+
+    
+    </style >
+
+
+
+    @*<header > header</header >*@
+    <section >
+    <aside > <p > main long content...</p > <p > main long content...</p > <p > main long content...</p > <p > main long content...</p > <p > main long content...</p > <p > main long content...</p > <p > main long content...</p > <p > main long content...</p > <p > main long content...</p > <p > main long content...</p > </aside >
+    <main>
+        main long content...
+        <p> main long content...</p> <p> main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p>
+        <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p>
+        <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p>
+        <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p> <p> main long content...</p>
+        <a href="javascript:void(0);" class="nav-link" role="button">
+           <i class="fa fa-user-circle" aria-hidden="true"></i>
+
+        </a>
+    </main>
+   </section >
+    @*<footer > footer</footer >*@

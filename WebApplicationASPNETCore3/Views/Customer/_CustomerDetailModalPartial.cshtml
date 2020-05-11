@@ -1,0 +1,87 @@
+@using System.Data
+@model CRM.Models.ViewModels.CustomerViewModel
+
+@if (@Model == null)
+{
+    <div>
+        <div class="alert alert-danger">
+            <span class="glyphicon glyphicon-remove-sign"></span>
+            <span>Unable to load data.</span>
+        </div>
+    </div>
+}
+else
+{
+    <div>
+
+        @*@using (Html.BeginForm("ProcessCustomerModalPage", "Customer", FormMethod.Post))
+            {*@
+        <form id="myForm">
+            <div class="row">
+                &nbsp;
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+
+                    <table id="tblCustomers" class="display table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Field Name
+                                </th>
+                                <th>
+                                    Field Value
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @for (int i = 0; i < @Model.Customer.KPV.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        <span>@Model.Customer.KPV[i].Key </span>
+                                        @Html.HiddenFor(x => x.Customer.KPV[i].Key, new { @class = "form-control" })
+                                    </td>
+
+                                    <td>
+                                        @Html.TextBoxFor(x => x.Customer.KPV[i].Value, new { @class = "form-control" })
+                                    </td>
+                                </tr>
+                            }
+
+                            <tr>
+                                <td>
+                                    <span>Status </span>
+                                </td>
+
+                                <td>
+                                    @Html.DropDownListFor(m => m.SelectedStatusId, @Model.StatusList, "---Select---")
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+
+                </div>
+            </div>
+            @Html.HiddenFor(x => x.SelectedWKCampaignId, new { @class = "form-control" })
+            @Html.HiddenFor(x => x.PageSize, new { @class = "form-control" })
+            @Html.HiddenFor(x => x.CurrentPage, new { @class = "form-control" })
+            <button type="submit" id="btnModalSubmit" hidden class="btn btn-primary">Submit</button>
+        </form>
+            @*}*@
+    </div>
+    
+    }
+
+
+    @*<script type="text/javascript">
+            $(function () {
+                $('#approve-btn').click(function () {
+                    $('#modal-container').modal('hide');
+                });
+            });
+        </script>*@
+

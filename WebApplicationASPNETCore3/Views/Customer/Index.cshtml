@@ -1,0 +1,107 @@
+@using System.Data
+@model CRM.Models.ViewModels.CustomerPagination
+
+@{
+
+    ViewData["Title"] = "Customer";
+}
+<link rel="stylesheet" href="~/css/section.css" />
+
+
+@*<h2>Customer</h2>*@
+
+<div>@Html.ValidationSummary(true, "", new { @class = "text-danger" })</div>
+
+
+    <section>
+
+
+        <aside>
+            <div>
+            @using (Html.BeginForm("Index", "Customer"))
+            {
+                @*<SELECT class="form-control" id="campaignDDL">
+                </SELECT>*@
+
+                <label><b>Campaign</b></label>
+                @Html.DropDownListFor(m => m.SelectedWKCampaignId, (IEnumerable<SelectListItem>)ViewBag.CampaignList, "---Select---", new { @class = "form-control", onchange = "this.form.submit();" })
+                @*<br />
+                <button id="btnCampaign" onclick="changeWKCampaign();" class="btn btn-primary" style="font-size:10px">OK</button>*@
+                <hr />
+            }
+            </div>
+            <ul id="searchList" class="nav flex-column">
+                <li>
+                    <div>
+
+                        <label><b>Search</b></label>
+                        <br />
+                    </div>
+                </li>
+                @if (Model != null)
+                {
+                @foreach (DataColumn col in Model.Data.Columns)
+                {
+                    <li class="nav-item">
+                        <div>@col.ColumnName</div>
+                        <div>
+                            @Html.TextBox(@col.ColumnName, "", new { @class = "form-control" })
+
+                            @*@Html.TextBoxFor(x => x.Data.Columns[@col.ColumnName], new { @id= @col.ColumnName, Value="",  @class = "form-control" })*@
+                            @*<input type="text" id="(@col.ColumnName)_id">*@
+                        </div>
+                    </li>
+                }
+                }
+                <li>
+                    <div>
+                        <br />
+                        <button onclick="customerSearch();" class="btn btn-primary">Submit</button>
+                    </div>
+                </li>
+            </ul>
+
+
+        </aside>
+
+
+        <main>
+            @{
+                if (Model != null)
+                {
+                    Html.RenderPartial("_CustomerListPartial", Model);
+                }
+            }
+
+
+
+            </main>
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="customerModal" tabindex="-1" role="dialog" aria-labelledby="customerModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="customerModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="modalWrapper" class="modal-body">
+                        @* Inject form here *@
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="btnModalSave" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+
+    <script src="~/js/customer.js" asp-append-version="true"></script>

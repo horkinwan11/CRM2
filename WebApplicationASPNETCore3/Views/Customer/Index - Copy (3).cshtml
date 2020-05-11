@@ -1,0 +1,90 @@
+@using System.Data
+@model CRM.Models.ViewModels.CustomerPagination
+
+@{
+
+  //  ViewData["Title"] = "Customer";
+}
+<link rel="stylesheet" href="~/css/customer.css" />
+
+
+@*<h2>Customer</h2>*@
+
+
+<section>
+   
+
+    <aside>
+       
+            <ul id="searchList" class="nav flex-column" >
+                <li>
+                    <div>
+
+                        <label><b>Search</b></label>
+                        <br />
+                    </div>
+                </li>
+                @foreach (DataColumn col in Model.Data.Columns)
+                {
+                    <li class="nav-item">
+                        <div>@col.ColumnName</div>
+                        <div>
+                            @Html.TextBox(@col.ColumnName, "", new { @class = "form-control" })
+                            
+                            @*@Html.TextBoxFor(x => x.Data.Columns[@col.ColumnName], new { @id= @col.ColumnName, Value="",  @class = "form-control" })*@
+                            @*<input type="text" id="(@col.ColumnName)_id">*@
+                        </div>
+                    </li>
+                }
+                <li>
+                    <div>
+                        <br />
+                        <button onclick="customerSearch();"  class="btn btn-primary">Submit</button>
+                    </div>
+                </li>
+            </ul>
+            @Html.HiddenFor(x => x.PageSize, new { @class = "form-control" })
+            @Html.HiddenFor(x => x.CurrentPage, new { @class = "form-control" })
+      
+    </aside>
+
+
+        <main>
+            @*<div class="container-fluid">*@
+            <div class="row">
+                <div id="customerList" class="col-lg-12">
+                   
+                </div>
+            </div>
+            
+        </main>
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="customerModal" tabindex="-1" role="dialog" aria-labelledby="customerModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="customerModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="modalWrapper" class="modal-body">
+                        @* Inject form here *@
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="btnModalSave" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+</section>
+  
+
+
+<script src="~/js/customer.js" asp-append-version="true"></script>

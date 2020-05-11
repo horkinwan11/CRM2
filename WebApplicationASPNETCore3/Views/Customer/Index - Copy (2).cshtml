@@ -1,0 +1,171 @@
+@using System.Data
+@model CRM.Models.ViewModels.CustomerPagination
+
+@{
+    ViewData["Title"] = "Customer";
+}
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+<link rel="stylesheet" href="~/css/customer.css" />
+<style type="text/css">
+
+
+.sidenav {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 50px;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  color: #818181;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.main {
+  margin-left: 160px; /* Same as the width of the sidenav */
+  padding: 0px 10px;
+}
+
+</style>
+@*<h2>Customer</h2>*@
+<div>
+    <div class="sidenav">
+
+        @foreach (DataColumn col in Model.Data.Columns)
+        {
+            <a href="#">@col.ColumnName <input type="text" id="(@col.ColumnName)_id"></a>
+
+        }
+
+    </div>
+
+
+
+    <div class="main">
+        <table id="tblCustomers" class="display table">
+            <thead>
+                <tr>
+                    @{ int i = 0; }
+                    <th>
+                        @Model.Data.Columns[i++].ColumnName
+                    </th>
+                    <th>
+                        @Model.Data.Columns[i++].ColumnName
+                    </th>
+                    <th>
+                        @Model.Data.Columns[i++].ColumnName
+                    </th>
+                    <th>
+                        @Model.Data.Columns[i].ColumnName
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DataRow row in Model.Data.Rows)
+                {
+                    i = 0;
+
+                    @*<tr class="search btn-default" data-toggle="modal" data-assigned-id="@row["id"]" data-target="#exampleModalLong">*@
+                    <tr>
+                        <td>
+                            @*<a href="#exampleModalLong"> @row[i++]</a>*@
+                            <span>@row[i++]</span>
+                        </td>
+                        <td>
+                            <span>@row[i++]</span>
+                        </td>
+                        <td>
+                            <span>@row[i++]</span>
+                        </td>
+                        <td>
+                            <span>@row[i++]</span>
+                        </td>
+                        @*<td>
+
+                                @Html.ActionLink("Detail", "ViewCustomerModalPage", "Customer",
+                               new
+                                    {                                                     // routeValues
+                               Id = @row["id"]
+                                    },
+                               new { @class = "modal-link btn btn-success" })
+
+                            </td>*@
+                        <td>
+
+                            <button onclick="customerDetail(@row["id"])" class="btn btn-primary">Detail</button>
+
+
+                        </td>
+                        @*<td>
+
+                                <a id="detailModal" data-toggle="modal" data-target="#modal-action-id" class="btn btn-danger" asp-action="ViewCustomerModalPage" asp-controller="Customer" asp-route-id="@row["id"]">
+                                      Detail
+                                </a>
+
+                            </td>*@
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+
+        <div>
+            <ul class="pagination">
+                @for (int p = 1; p <= Model.TotalPages; p++)
+                {
+                    <li class="page-item @(p == Model.CurrentPage ? "active" : "")">
+                        <a asp-action="Index" asp-controller="Customer" asp-route-currentPage="@p" asp-route-pageSize="10" class="page-link">@p</a>
+                        @*<a asp-page="/pagination" asp-route-currentpage="@p" class="page-link">@p</a>*@
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <input type="hidden" id="cp_pageSize" value="@Model.PageSize">
+        <input type="hidden" id="cp_currentPage" value="@Model.CurrentPage">
+
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="customerModal" tabindex="-1" role="dialog" aria-labelledby="customerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customerModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="modalWrapper" class="modal-body">
+                @* Inject form here *@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="btnModalSave" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/js/customer.js" asp-append-version="true"></script>

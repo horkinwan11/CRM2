@@ -1,0 +1,217 @@
+@using System.Data
+@model CRM.Models.ViewModels.CustomerPagination
+
+@{
+    ViewData["Title"] = "Customer";
+}
+<link rel="stylesheet" href="~/css/customer.css" />
+
+<h2>Customer</h2>
+
+<div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar">
+        <div class="custom-menu">
+            <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                <i class="fa fa-bars"></i>
+                <span class="sr-only">Toggle Menu</span>
+            </button>
+        </div>
+        <div class="p-4 pt-5">
+            <h5>Search</h5>
+            <ul class="list-unstyled components mb-5">
+
+                @foreach (DataColumn col in Model.Data.Columns)
+                {
+
+                    <li>
+                        <span>@col.ColumnName</span>
+
+
+
+                     <span> <input type="text" id="(@col.ColumnName)_id"></span>
+
+                    </li>
+
+                    }
+               
+                    <li>
+                        <br />
+                        <button onclick="customerList" class="btn btn-primary">Submit</button>
+                    </li>
+
+            </ul>
+        </div>
+    </nav>
+
+
+    <div id="content" class="p-4 p-md-5 pt-5" style="width:100%">
+        <table id="tblCustomers" class="display table">
+            <thead>
+                <tr>
+                    @{ int i = 0; }
+                    <th>
+                        @Model.Data.Columns[i++].ColumnName
+                    </th>
+                    <th>
+                        @Model.Data.Columns[i++].ColumnName
+                    </th>
+                    <th>
+                        @Model.Data.Columns[i++].ColumnName
+                    </th>
+                    <th>
+                        @Model.Data.Columns[i].ColumnName
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DataRow row in Model.Data.Rows)
+                {
+                    i = 0;
+
+                    @*<tr class="search btn-default" data-toggle="modal" data-assigned-id="@row["id"]" data-target="#exampleModalLong">*@
+                    <tr>
+                        <td>
+                            @*<a href="#exampleModalLong"> @row[i++]</a>*@
+                            <span>@row[i++]</span>
+                        </td>
+                        <td>
+                            <span>@row[i++]</span>
+                        </td>
+                        <td>
+                            <span>@row[i++]</span>
+                        </td>
+                        <td>
+                            <span>@row[i++]</span>
+                        </td>
+                        @*<td>
+
+                            @Html.ActionLink("Detail", "ViewCustomerModalPage", "Customer",
+                           new
+                                {                                                     // routeValues
+                           Id = @row["id"]
+                                },
+                           new { @class = "modal-link btn btn-success" })
+
+                        </td>*@
+                        <td>
+
+                            <button onclick="customerDetail(@row["id"])" class="btn btn-primary">Detail</button>
+
+
+                        </td>
+                        @*<td>
+
+                            <a id="detailModal" data-toggle="modal" data-target="#modal-action-id" class="btn btn-danger" asp-action="ViewCustomerModalPage" asp-controller="Customer" asp-route-id="@row["id"]">
+                                  Detail
+                            </a>
+
+                        </td>*@
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+
+        <div>
+            <ul class="pagination">
+                @for (int p = 1; p <= Model.TotalPages; p++)
+                {
+                    <li class="page-item @(p == Model.CurrentPage ? "active" : "")">
+                        <a asp-action="Index" asp-controller="Customer" asp-route-currentPage="@p" asp-route-pageSize="10" class="page-link">@p</a>
+                        @*<a asp-page="/pagination" asp-route-currentpage="@p" class="page-link">@p</a>*@
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <input type="hidden" id="cp_pageSize" value="@Model.PageSize">
+        <input type="hidden" id="cp_currentPage" value="@Model.CurrentPage">
+    </div>
+</div>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="customerModal" tabindex="-1" role="dialog" aria-labelledby="customerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="customerModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="modalWrapper" class="modal-body">
+                    @* Inject form here *@
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="btnModalSave" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    @*<script type="text/javascript">
+
+        function customerDetail(customerId) {
+            $.ajax({
+                url: '/Customer/ViewCustomerModalPage/' + customerId, // The method name + paramater
+                success: function (data) {
+                    $('#modalWrapper').html(data); // This should be an empty div where you can inject your new html (the partial view)
+                    $('#customerModal').modal();
+                },
+                error: function () {
+                    alert("Customer Data failed to load.");
+                });
+        }
+
+        </script>*@
+
+    @*<div aria-hidden="true" aria-labelledby="modal-action-label" role="dialog" tabindex="-1" id="modal-action-id" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                </div>
+            </div>
+        </div>*@
+
+
+
+
+    @*<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document" tyle="width: 90%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="partial"></div>
+                        <div> Hello Sir at Modal</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+
+                    $(function () {
+                        $('.search').click(function () {
+                            var id = $(this).data('assigned-id');
+                            var route = '@Url.Action("ViewCustomerModalPage", "Customer")?id=' + id;
+                            $('#partial').load(route);
+                        });
+
+                    });
+
+        </script>*@
+
+
+    <script src="~/js/customer.js" asp-append-version="true"></script>

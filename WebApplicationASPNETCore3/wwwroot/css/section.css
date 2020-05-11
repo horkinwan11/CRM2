@@ -1,0 +1,34 @@
+﻿body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+section {
+    flex-grow: 1;
+    display: flex;
+    height: 0px; /* <== for scrolls in aside */
+    margin-bottom: 50px;
+   
+}
+aside {
+    width: 200px;
+    min-width: 100px;
+    background: #ccc;
+    overflow: auto;
+    min-height: 0;
+    transition-property: width;
+    transition-duration: 0.2s;
+    transition-timing-function: linear;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 5px;
+}
+
+section main {
+    overflow: auto;
+    flex-grow: 1;
+    padding-left: 20px;
+    padding-top: 20px;
+}

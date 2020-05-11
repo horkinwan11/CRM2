@@ -1,0 +1,129 @@
+@using System.Data
+@model CRM.Models.ViewModels.CustomerPagination
+
+
+<div class="row">
+    <div id="customerList" class="col-lg-12">
+        <table id="tblCustomers" class="display table">
+            <thead>
+                <tr>
+                    @{ int i = 0; }
+                    <th>
+                        @Model.Data.Columns[i++].ColumnName
+                    </th>
+                    <th>
+                        @Model.Data.Columns[i++].ColumnName
+                    </th>
+                    <th>
+                        @Model.Data.Columns[i++].ColumnName
+                    </th>
+                    <th>
+                        @Model.Data.Columns[i].ColumnName
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DataRow row in Model.Data.Rows)
+                {
+                    i = 0;
+
+                    @*<tr class="search btn-default" data-toggle="modal" data-assigned-id="@row["id"]" data-target="#exampleModalLong">*@
+                    <tr>
+                        <td>
+                            @*<a href="#exampleModalLong"> @row[i++]</a>*@
+                            <span>@row[i++]</span>
+                        </td>
+                        <td>
+                            <span>@row[i++]</span>
+                        </td>
+                        <td>
+                            <span>@row[i++]</span>
+                        </td>
+                        <td>
+                            <span>@row[i++]</span>
+                        </td>
+                        <td>
+                            <span>@row[Model.Data.Columns["Status"].ColumnName]</span>
+                        </td>
+                        @*<td>
+
+                                @Html.ActionLink("Detail", "ViewCustomerModalPage", "Customer",
+                               new
+                                    {                                                     // routeValues
+                               Id = @row["id"]
+                                    },
+                               new { @class = "modal-link btn btn-success" })
+
+                            </td>*@
+                        <td>
+
+                            <button onclick="customerDetail(@row["id"])" class="btn btn-primary">Detail</button>
+
+
+                        </td>
+                        @*<td>
+
+                                <a id="detailModal" data-toggle="modal" data-target="#modal-action-id" class="btn btn-danger" asp-action="ViewCustomerModalPage" asp-controller="Customer" asp-route-id="@row["id"]">
+                                      Detail
+                                </a>
+
+                            </td>*@
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+
+        @*<div>
+                <ul class="pagination">
+                    @for (int p = 1; p <= Model.TotalPages; p++)
+                    {
+                        <li class="page-item @(p == Model.CurrentPage ? "active" : "")">
+                            <a onclick="customerSearch(@p);" href="#" class="page-link">@p</a>
+                        </li>
+                    }
+                </ul>
+            </div>*@
+
+        <!-- pager -->
+        @if (Model.Pager.EndPage > 1)
+        {
+            <ul class="pagination">
+                @if (Model.Pager.CurrentPage > 1)
+                {
+                    <li>
+                        <a onclick="customerSearch(1);" href="#" class="page-link">First</a>
+                    </li>
+                    <li>
+                        <a onclick="customerSearch(@(Model.Pager.CurrentPage - 1));" href="#" class="page-link">Previous</a>
+                    </li>
+                }
+
+                @for (int p = Model.Pager.StartPage; p <= Model.Pager.EndPage; p++)
+                {
+                    <li class="page-item @(p == Model.Pager.CurrentPage ? "active" : "")">
+                        <a onclick="customerSearch(@p);" href="#" class="page-link">@p</a>
+                    </li>
+                }
+
+                @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+                {
+                    <li>
+                        <a onclick="customerSearch(@(Model.Pager.CurrentPage + 1));" href="#" class="page-link">Next</a>
+
+                    </li>
+                    <li>
+                        <a onclick="customerSearch(@(Model.Pager.TotalPages));" href="#" class="page-link">Last</a>
+
+                    </li>
+                }
+            </ul>
+        }
+
+        <input type="hidden" id="cp_pageSize" value="@Model.Pager.PageSize">
+        <input type="hidden" id="cp_currentPage" value="@Model.Pager.CurrentPage">
+
+    </div>
+</div>
+

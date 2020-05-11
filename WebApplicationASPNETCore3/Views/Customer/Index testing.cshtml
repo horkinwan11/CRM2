@@ -1,0 +1,88 @@
+@using System.Data
+@model IEnumerable<DataRow>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<link rel="stylesheet" type="text/css" href="/DataTables/datatables.css">
+
+<script type="text/javascript" charset="utf8" src="/DataTables/datatables.js">
+</script>
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table id="table_id" class="display table">
+    <thead>
+        <tr>
+            @{ int i = 0; }
+            <th>
+                @Model.ElementAt(i++)
+            </th>
+            <th>
+                @Model.ElementAt(i++)
+            </th>
+            <th>
+                @Model.ElementAt(i++)
+            </th>
+            <th>
+                @Model.ElementAt(i)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (DataRow row in Model)
+        {
+            i = 0;
+
+            <tr>
+                <td>
+                    <a href="#my_modal" data-toggle="modal" data-customer-id="@row["id"]"> @row[i++]</a>
+                </td>
+                <td>
+                    @row[i++]
+                </td>
+                <td>
+                    @row[i++]
+                </td>
+                <td>
+                    @row[i++]
+                </td>
+                @*<td>
+                        <a asp-action="ChangePassword" asp-route-id="@item.Id">Change Password</a> |
+                        <a asp-action="Permissions" asp-route-id="@item.Id">Permissions</a> |
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>*@
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+<nav aria-label="...">
+    <ul class="pagination pagination-lg">
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">1</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+    </ul>
+</nav>
+<
+<script>
+
+    
+
+    $('#my_modal').on('show.bs.modal', function (e) {
+
+        //get data-id attribute of the clicked element
+        var customerId = $(e.relatedTarget).data('customer-id');
+
+        //populate the textbox
+        $(e.currentTarget).find('input[name="customerId"]').val(customerId);
+
+
+</script>

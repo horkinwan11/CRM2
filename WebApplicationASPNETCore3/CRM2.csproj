@@ -1,0 +1,57 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>CRM</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Customer\Index - Copy %282%29.cshtml" />
+    <Content Remove="Views\Customer\Index - Copy %283%29.cshtml" />
+    <Content Remove="Views\Customer\Index - Copy.cshtml" />
+    <Content Remove="Views\Customer\Index - DataTable.cshtml" />
+    <Content Remove="Views\Customer\Index - JQuery DataGrid.cshtml" />
+    <Content Remove="Views\Customer\Index - responsive sidebar search.cshtml" />
+    <Content Remove="Views\Customer\Index - Toggle Sidebar correct Pagination.cshtml" />
+    <Content Remove="Views\Customer\Index - with collapse sidebar.cshtml" />
+    <Content Remove="Views\TestSideBar\Index - Copy (2).cshtml" />
+    <Content Remove="Views\TestSideBar\Index - Copy.cshtml" />
+    <Content Remove="Views\TestSideBar\Index ElaAdmin-master.cshtml" />
+    <Content Remove="Views\TestSideBar\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\TestSideBar\Index - Copy (2).cshtml" />
+    <None Include="Views\TestSideBar\Index - Copy.cshtml" />
+    <None Include="Views\TestSideBar\Index.cshtml" />
+    <None Include="Views\TestSideBar\Index ElaAdmin-master.cshtml" />
+    <None Include="Views\TestSideBar\Index_orig.cshtml" />
+    <None Include="wwwroot\js\testsidebar.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="2.5.2" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+    <PackageReference Include="MySqlConnector" Version="0.62.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Helper\" />
+  </ItemGroup>
+
+
+
+</Project>
