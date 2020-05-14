@@ -59,9 +59,11 @@ namespace CRM.Services.ViewModels
 
             Package PackageToUpdate = model;
             PackageToUpdate.Description = model.Description;
-            PackageToUpdate.Name = model.Name;
+            PackageToUpdate.Name = model.Name; 
+            PackageToUpdate.Description = model.Description;
+            PackageToUpdate.Weight = model.Weight;
             PackageToUpdate.Status = model.Status;
-            PackageToUpdate.CampaignId = model.CampaignId;
+            PackageToUpdate.CampaignId = model.CampaignId;  // assign to Campaign Id
             PackageToUpdate.CreatedBy = userName;
             PackageToUpdate.CreatedDate = DateTime.Now;
             await _context.Package.AddAsync(PackageToUpdate);
@@ -72,8 +74,10 @@ namespace CRM.Services.ViewModels
         {
 
             Package PackageToUpdate = await _context.Package.SingleOrDefaultAsync(m => m.Id == id);
-            PackageToUpdate.Description = model.Description;
             PackageToUpdate.Name = model.Name;
+            PackageToUpdate.Description = model.Description;
+            PackageToUpdate.Weight = model.Weight;
+            PackageToUpdate.Status = model.Status;
             PackageToUpdate.UpdatedBy = userName;
             PackageToUpdate.UpdatedDate = DateTime.Now;
             await _context.SaveChangesAsync();

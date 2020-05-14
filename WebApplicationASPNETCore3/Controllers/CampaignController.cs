@@ -76,6 +76,7 @@ namespace CRM.Controllers
         public ActionResult Create(string tabId)
         {
             ViewBag.tabId = String.IsNullOrEmpty(tabId) ? "0" : tabId;
+            ViewData["Title"] = "Campaign: "; 
             return View();
         }
 
@@ -83,35 +84,47 @@ namespace CRM.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Campaign model)
         {
+            Campaign campaign = null;
             if (ModelState.IsValid)
             {
-                Campaign campaign = await _campaignService.Create(_ezAuth.UserName, model);
+                campaign = await _campaignService.Create(_ezAuth.UserName, model);
 
             }
-            else 
+
+            //Pass to the tab details view
+            if (campaign != null)
             {
-                //TODO: return error save
+                ViewBag.CampaignId = campaign.Id;
+                ViewBag.CampaignName = campaign.Name;
+                ViewData["Title"] = "Campaign: " + campaign.Name;
             }
+
             return View(model);
         }
 
-        public async Task<IActionResult> Edit(int? id, string tabId, int? campaignId)
+        public async Task<IActionResult> Edit(int? id, string tabId)
         {
             ViewBag.tabId = String.IsNullOrEmpty(tabId) ? "0" : tabId;
            
 
-            if (id == null && campaignId == null)
+            if (id == null )
             {
                 return  BadRequest("Bad request campaign Id");
             }
 
-            ViewBag.CampaignId = id == null ? campaignId : id;
+           
 
             Campaign campaign = await _campaignService.GetCampaignById(id.GetValueOrDefault());
             if (campaign == null)
             {
                 return NotFound();
             }
+
+            //Pass to the tab details view
+            ViewBag.CampaignId = id;
+            ViewBag.CampaignName = campaign.Name;
+            ViewData["Title"] = "Campaign: " + campaign.Name;
+
             return View(campaign);
         }
 
@@ -129,6 +142,10 @@ namespace CRM.Controllers
                 campaignToUpdate = await _campaignService.Update(_ezAuth.UserName, id.GetValueOrDefault(), model);
             
             }
+            //Pass to the tab details view
+            ViewBag.CampaignId = model.Id;
+            ViewBag.CampaignName = model.Name;
+            ViewData["Title"] = "Campaign: " + model.Name;
 
             return View(model);
         }

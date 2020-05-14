@@ -1,0 +1,66 @@
+@model IEnumerable<CRM.Models.Entities.Package>
+
+<div class="row">
+    <div id="packageList" class="col-lg-12">
+        <table id="tblPackages" class="display table">
+            <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Weight
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Weight)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+
+                            <button onclick="packageEdit(@item.Id)" class="btn btn-primary">Edit</button>
+                            <button onclick="packageDelete(@item.Id)" class="btn btn-danger">Delete</button>
+
+                            @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+        <button onclick="packageNew()" class="btn btn-primary">Add</button>
+
+
+    </div>
+</div>
+

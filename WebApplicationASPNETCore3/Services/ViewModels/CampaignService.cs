@@ -78,7 +78,7 @@ namespace CRM.Services.ViewModels
         public async Task<Campaign> Create(string userName, Campaign model)
         {
 
-            Campaign campaignToUpdate = model;
+            Campaign campaignToUpdate = new Campaign();
             campaignToUpdate.Description = model.Description;
             campaignToUpdate.Name = model.Name;
             campaignToUpdate.StartDate = model.StartDate;

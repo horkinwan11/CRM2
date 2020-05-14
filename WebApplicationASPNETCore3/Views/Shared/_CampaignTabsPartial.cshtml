@@ -1,8 +1,12 @@
 @{
     var tabId = ViewBag.tabId == null ? "0": ViewBag.tabId;
     var campaignId = ViewBag.CampaignId == null ? "0": ViewBag.CampaignId;
-}
+    var campaignName = ViewBag.CampaignName == null ? "??": ViewBag.campaignName;
 
+   
+}
+    <br />
+    <h4>Campaign - @campaignName</h4>
     <br />
     <ul class="nav nav-pills  nav-fill">
         <li class="nav-item">
@@ -11,17 +15,18 @@
             <a class="nav-link @(tabId =="0" ?"active":"") " href="/Campaign/Edit/@campaignId">Details</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link @(tabId =="1" ?"active":"")" asp-controller="Package" asp-action="Index" asp-route-tabId="1"  asp-route-campaignId="@campaignId">Packages</a>
+            <a class="nav-link @(tabId =="1" ?"active":"")" asp-controller="Package" asp-action="Index" asp-route-tabId="1"  asp-route-campaignId="@campaignId" asp-route-campaignName="@campaignName">Packages</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link @(tabId =="2" ?"active":"") " asp-controller="Campaign" asp-action="Index" asp-route-tabId="2" asp-route-campaignId="@campaignId">Status Codes</a>
+            <a class="nav-link @(tabId =="2" ?"active":"") " asp-controller="Status" asp-action="Index" asp-route-tabId="2" asp-route-campaignId="@campaignId" asp-route-campaignName="@campaignName">Status Codes</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link @(tabId =="3" ?"active":"") " asp-controller="Campaign" asp-action="Index" asp-route-tabId="3" asp-route-campaignId="@campaignId">Customer Data</a>
+            <a class="nav-link @(tabId =="3" ?"active":"") " asp-controller="CustomerUploadData" asp-action="Index" asp-route-tabId="3" asp-route-campaignId="@campaignId" asp-route-campaignName="@campaignName">Customer Upload Data</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link @(tabId =="4" ?"active":"") " asp-controller="Campaign" asp-action="Index" asp-route-tabId="4" asp-route-campaignId="@campaignId">Team Distribution</a>
+            <a class="nav-link @(tabId =="4" ?"active":"") " asp-controller="TeamDistribution" asp-action="Index" asp-route-tabId="4" asp-route-campaignId="@campaignId" asp-route-campaignName="@campaignName">Team Distribution</a>
         </li>
     </ul>
+<input type="hidden" value="@campaignId" id="hidCampaignId" />
     <br />
 
