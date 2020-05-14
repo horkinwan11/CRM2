@@ -25,7 +25,8 @@ namespace CRM.Controllers
 
         public IActionResult Index()
         {
-           
+            ViewBag.DD = "{\"1\": \"Black Widow\", \"2\": \"Captain America\", \"3\": \"Iron Man\"}";
+
             return View();
         }
         public IActionResult Index1()

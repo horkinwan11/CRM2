@@ -9,13 +9,13 @@
 	<aside>
 		<div>
 			@{
-			Html.RenderPartial("../Shared/_CampaignLeftBarMenuPartial");
+				Html.RenderPartial("_LeftBarMenuPartial");
 			}
 		</div>
 	</aside>
 	<main>
 		@{
-			Html.RenderPartial("../Shared/_CampaignTabsPartial");
+			Html.RenderPartial("_TabsPartial");
 		}
 
 		@using (Html.BeginForm())

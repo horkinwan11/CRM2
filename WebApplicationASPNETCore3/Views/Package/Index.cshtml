@@ -1,0 +1,105 @@
+@model IEnumerable<CRM.Models.Entities.Package>
+
+@{
+
+    ViewData["Title"] = "Campaign";
+}
+<link rel="stylesheet" href="~/css/section.css" />
+
+
+@*<h2>Customer</h2>*@
+
+<div>@Html.ValidationSummary(true, "", new { @class = "text-danger" })</div>
+
+
+<section>
+
+
+    <aside>
+        <div>
+            @{
+                Html.RenderPartial("../Shared/_CampaignLeftBarMenuPartial");
+            }
+        </div>
+
+
+
+    </aside>
+
+
+    <main>
+        @{
+            Html.RenderPartial("../Shared/_CampaignTabsPartial");
+        }
+        @{
+            if (Model != null)
+            {
+
+                <div class="row">
+                    <div id="campaignList" class="col-lg-12">
+                        <table id="tblCampaigns" class="display table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Id
+                                    </th>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Description
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Id)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Description)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Status)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <br />
+
+
+
+                    </div>
+                </div>
+
+            }
+        }
+
+
+
+    </main>
+
+
+
+
+
+</section>
+

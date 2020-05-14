@@ -21,12 +21,14 @@ namespace CRM.Controllers
     {
         private readonly CRMContext _context;
         private readonly CampaignService _campaignService;
+        private readonly EZAuth _ezAuth;
         private readonly EZSession _ezSession;
 
-        public CampaignController(EZSession ezSession, CRMContext context, CampaignService campaignService)
+        public CampaignController(EZAuth ezAuth, EZSession ezSession, CRMContext context, CampaignService campaignService)
         {
             _context = context;
             _campaignService = campaignService;
+            _ezAuth = ezAuth;
             _ezSession = ezSession;
         }
 
@@ -34,8 +36,7 @@ namespace CRM.Controllers
         {
             int _currentPage = currentPage == null ? 1 : currentPage.GetValueOrDefault();
             int _pageSize = pageSize == null ? 10 : pageSize.GetValueOrDefault();
-
-
+           
             CampaignPagination campaignPagination = await _campaignService.GetPaginatedResult(null, _currentPage, _pageSize);
 
             return View(campaignPagination);
@@ -72,13 +73,40 @@ namespace CRM.Controllers
             return Ok();
         }
 
-
-        public async Task<IActionResult> Edit(int? id)
+        public ActionResult Create(string tabId)
         {
-            if (id == null)
+            ViewBag.tabId = String.IsNullOrEmpty(tabId) ? "0" : tabId;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(Campaign model)
+        {
+            if (ModelState.IsValid)
+            {
+                Campaign campaign = await _campaignService.Create(_ezAuth.UserName, model);
+
+            }
+            else 
+            {
+                //TODO: return error save
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> Edit(int? id, string tabId, int? campaignId)
+        {
+            ViewBag.tabId = String.IsNullOrEmpty(tabId) ? "0" : tabId;
+           
+
+            if (id == null && campaignId == null)
             {
                 return  BadRequest("Bad request campaign Id");
             }
+
+            ViewBag.CampaignId = id == null ? campaignId : id;
+
             Campaign campaign = await _campaignService.GetCampaignById(id.GetValueOrDefault());
             if (campaign == null)
             {
@@ -98,7 +126,7 @@ namespace CRM.Controllers
             }
             if (ModelState.IsValid)
             {
-                campaignToUpdate = await _campaignService.Update(id.GetValueOrDefault(), model);
+                campaignToUpdate = await _campaignService.Update(_ezAuth.UserName, id.GetValueOrDefault(), model);
             
             }
 

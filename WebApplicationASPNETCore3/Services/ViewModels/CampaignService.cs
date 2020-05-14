@@ -75,13 +75,33 @@ namespace CRM.Services.ViewModels
 
             return campaign;
         }
+        public async Task<Campaign> Create(string userName, Campaign model)
+        {
 
-        public async Task<Campaign> Update(int id, Campaign model)
+            Campaign campaignToUpdate = model;
+            campaignToUpdate.Description = model.Description;
+            campaignToUpdate.Name = model.Name;
+            campaignToUpdate.StartDate = model.StartDate;
+            campaignToUpdate.EndDate = model.EndDate;
+            campaignToUpdate.Status = model.Status;
+            campaignToUpdate.CreatedBy = userName;
+            campaignToUpdate.CreatedDate = DateTime.Now;
+            await _context.Campaign.AddAsync(campaignToUpdate);
+            await _context.SaveChangesAsync();
+            return campaignToUpdate;
+        }
+        public async Task<Campaign> Update(string userName, int id, Campaign model)
         {
 
             Campaign campaignToUpdate = await _context.Campaign.SingleOrDefaultAsync(m => m.Id == id);
             campaignToUpdate.Description = model.Description;
-           
+            campaignToUpdate.Name = model.Name;
+            campaignToUpdate.StartDate = model.StartDate;
+            campaignToUpdate.EndDate = model.EndDate;
+            campaignToUpdate.Status = model.Status;
+            campaignToUpdate.UpdatedBy = userName;
+            campaignToUpdate.UpdatedDate = DateTime.Now;
+            await _context.SaveChangesAsync();
             return campaignToUpdate;
         }
 
