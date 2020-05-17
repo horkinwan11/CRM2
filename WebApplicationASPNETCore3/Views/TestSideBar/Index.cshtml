@@ -1,4 +1,67 @@
 ﻿@using System.Web.Helpers
+<style type="text/css">
+
+    fieldset {
+        border: none;
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    #lblDBXP {
+        font-weight: bold;
+    }
+
+    #choicelist {
+        border: 1px solid #d6d6d6;
+        width: 100%;
+        min-width: 200px;
+        max-width: 500px;
+        border-radius: 2px;
+        display: none;
+    }
+
+    #selectedDBXP {
+        border: 1px solid #d6d6d6;
+        width: 100%;
+        min-width: 200px;
+        max-width: 500px;
+        border-radius: 2px;
+        height: 2.5em;
+        background-color: #fff;
+        position: relative;
+        text-align: left;
+    }
+
+    #choicelist > div {
+        padding: 10px 0px 10px 5px;
+    }
+
+    .wanhorkin {
+        font-weight: bold;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input[type="text"] {
+        margin: 0px 0px 20px 10px;
+    }
+
+    .fa-chevron-down {
+        position: absolute;
+        right: 1em;
+        top: 0.9em;
+        color: #a8a8a8;
+        transition: transform .2s ease-out, color .2s ease-out;
+        font-size: 0.85em;
+    }
+
+    .fa-chevron-down--open {
+        transform: rotate(-180deg) translate(0, 2px);
+        color: #404040;
+    }
+</style>
 <div>
     <table class="table table-striped table-bordered" id="example6">
         <thead>
@@ -34,15 +97,50 @@
             </tr>
         </tbody>
     </table>
+    
+    <form id="myForm2">
+        <div id="lblDBXP">Which of the following Relational Database Management Systems (RDBMS) are you experienced with?</div>
+        <button id="selectedDBXP" aria-expanded="false" aria-labelledby="lblDBXP DBXPList" onclick="return DBXPclick(event);">
+            <span id="DBXPList"></span>
+            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+        </button>
+       
+        <fieldset aria-labelledby="lblDBXP">
+            <div id="choicelist">
+                
+                <label><input onclick="CheckAll('group1', this);" type="checkbox" /> Group A</label>
+                <fieldset id="group1">
+                    <div><input type="text" name="FirstName" value="Mickey"></div>
+                    <div><input type="checkbox" name="Check" value="Yes"></div>
+                    <div class="wanhorkin" ><input value="300" type="checkbox" name="ENG101" > English</div>
+                    <div><input value="500" type="checkbox" name="SCI101"> Science</div>
+                    <div><input value="755" type="checkbox" name="CLE101"> Christian Living</div>
+                </fieldset>
+                <label><input onclick="CheckAll('group2', this);" type="checkbox" /> Group B</label>
+                <fieldset id="group2">
+                    <div><input value="245" type="checkbox" name="ENG202"> English</div>
+                    <div><input value="534" type="checkbox" name="SCI202"> Science</div>
+                    <div><input value="623" type="checkbox" name="CLE202"> Christian Living</div>
+                    <div><input value="954" type="checkbox" id="id_MAT101" name="MAT101"> Math</div>
+                </fieldset>
+                <p></p>
 
+            </div>
+        </fieldset>
+        <button type="submit" id="frmsubmit" onclick="DBXPSubmit(this)">Submit</button>
+    </form>
 
 </div>
 
 <script src="~/js/jquery.tabledit.min.js"></script>
+<script src="~/js/TestSideBar.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    
+
+
         //var obj = '{ "1": "Black Widow", "2": "Captain America", "3": "Iron Man" }';
+
 
         var obj = '@(Html.Raw(ViewBag.DD))';
         alert(obj);
@@ -94,6 +192,6 @@
             }
         });
 
-    });
+    
 
 </script>

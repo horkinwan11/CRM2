@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ using CRM.Services.ViewModels;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Storage;
 
+
 namespace CRM.Controllers
 {
     //[EZAuth(permissions: "Agent")]
@@ -21,13 +23,15 @@ namespace CRM.Controllers
     {
         private readonly CRMContext _context;
         private readonly PackageService _packageService;
+        private readonly CampaignService _campaignService;
         private readonly EZAuth _ezAuth;
         private readonly EZSession _ezSession;
 
-        public PackageController(EZAuth ezAuth, EZSession ezSession, CRMContext context, PackageService packageService)
+        public PackageController(EZAuth ezAuth, EZSession ezSession, CRMContext context, PackageService packageService, CampaignService campaignService)
         {
             _context = context;
             _packageService = packageService;
+            _campaignService = campaignService;
             _ezAuth = ezAuth;
             _ezSession = ezSession;
         }
@@ -103,6 +107,21 @@ namespace CRM.Controllers
             return View(model);
         }
 
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return BadRequest("Bad request Package Id");
+            }
+            if (ModelState.IsValid)
+            {
+                await _packageService.Delete(_ezAuth.UserName, id.GetValueOrDefault());
+
+            }
+
+            return Ok();
+        }
         public async Task<IActionResult> LoadPackageList(int? campaignId)
         {
 
@@ -130,7 +149,7 @@ namespace CRM.Controllers
                 package = new Package();
                 package.Status = ItemStatus.A;  //pre-select Status 
             }
-                //package.CampaignId = campaignId; //TODO: verify this is not null
+            //package.CampaignId = campaignId; //TODO: verify this is not null
             //if (package == null)
             //{
             //    return NotFound();
@@ -141,7 +160,7 @@ namespace CRM.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ProcessPackageModalPage(Package model) 
+        public async Task<IActionResult> ProcessPackageModalPage(Package model)
         {
 
             Package PackageToUpdate = null;
@@ -164,10 +183,74 @@ namespace CRM.Controllers
                 }
             }
 
-            
-            
+
+
             return Ok();
         }
 
+        public async Task<IActionResult> PackageCopyModalPage(int? campaignId)
+        {
+            List<Campaign> campaigns = null;
+            if (campaignId == null)
+            {
+                return BadRequest("Bad request Package Id");
+            }
+            if (campaignId > 0)
+            {
+                campaigns = await _campaignService.GetCampaign();
+                ViewBag.CampaignList = campaigns.Select(m => new SelectListItem { Text = m.Name, Value = m.Id.ToString() }).ToList();
+            }
+
+            return PartialView("_PackageCopyModalPartial");
+        }
+
+
+        public async Task<IActionResult> PackageCopyModalPageIndex()
+        {
+    //        List<SelectListItem> CountryList = new List<SelectListItem>
+    //{
+    //    new SelectListItem{Text="India",Value="1"},
+    //    new SelectListItem{Text="United States",Value="2"},
+    //    new SelectListItem{Text="Australia",Value="3"},
+    //    new SelectListItem{Text="South Africa",Value="4"},
+    //    new SelectListItem{Text="China",Value="5"}
+    //};
+            List<Campaign> campaigns = await _campaignService.GetCampaign();
+
+            ViewBag.CountryList = campaigns.Select( m => new SelectListItem { Text = m.Name, Value = m.Id.ToString() });
+            return View();
+        }
+
+        public async Task<string> PackageCopyModalPageGetPackages(int? id)
+        {
+           
+            int campaignId = id.GetValueOrDefault();
+            List<Package> packages = await _packageService.GetPackageByCampaignId(campaignId);
+            List<SelectListItem> packageList = packages.Select(m => new SelectListItem { Text = m.Name, Value = m.Id.ToString() }).ToList();
+            
+            return JsonSerializer.Serialize(packageList); ;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ProcessCopyPackageModalPage(int? campaignId, int? sc, string[] sp)
+        {
+           
+            if (campaignId == null )
+            {
+                return BadRequest("Bad Request Campaign Id in Package Form");
+            }
+
+            if (sp == null || sc == null)
+            {
+                return BadRequest("No Selection source Package in Package Form");
+            }
+
+            List<Package> packages = await _packageService.CopyMultiPackages(_ezAuth.UserName,  campaignId,  sc,  sp);
+            if (packages.Count == 0)
+                return NotFound("Nothing to be copied."); //TODO: replace with no create status
+            return Ok();
+        }
     }
+
 }

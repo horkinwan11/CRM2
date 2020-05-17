@@ -1,0 +1,58 @@
+﻿
+
+fieldset {
+    border: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+/*#lblDBXP {
+    font-weight: bold;
+}*/
+
+#choicelist {
+    border: 1px solid #d6d6d6;
+    width: 100%;
+    min-width: 200px;
+    max-width: 500px;
+    border-radius: 2px;
+    display: none;
+}
+
+#selectedDBXP {
+    border: 1px solid #d6d6d6;
+    width: 100%;
+    min-width: 200px;
+    max-width: 500px;
+    border-radius: 2px;
+    height: 2.5em;
+    background-color: #fff;
+    position: relative;
+    text-align: left;
+}
+
+#choicelist > div {
+    padding: 10px 0px 10px 5px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="text"] {
+    margin: 0px 0px 20px 10px;
+}
+
+.fa-chevron-down {
+    position: absolute;
+    right: 1em;
+    top: 0.9em;
+    color: #a8a8a8;
+    transition: transform .2s ease-out, color .2s ease-out;
+    font-size: 0.85em;
+}
+
+.fa-chevron-down--open {
+    transform: rotate(-180deg) translate(0, 2px);
+    color: #404040;
+}

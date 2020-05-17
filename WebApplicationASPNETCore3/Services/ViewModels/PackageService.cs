@@ -84,8 +84,38 @@ namespace CRM.Services.ViewModels
             return PackageToUpdate;
         }
 
+        public async Task<Package> Delete(string userName, int id)
+        {
 
-      
+            Package PackageToUpdate = await _context.Package.SingleOrDefaultAsync(m => m.Id == id);
+             _context.Package.Remove(PackageToUpdate);
+            await _context.SaveChangesAsync();
+            return PackageToUpdate;
+        }
+        public async Task<List<Package>> CopyMultiPackages(string userName, int? campaignId, int? sc, string[] sp)
+        {
+            int dCampaignId = campaignId.GetValueOrDefault();
+
+            List<Package> sPackages = await _context.Package.Where(m => m.CampaignId == sc.GetValueOrDefault() && sp.Contains(m.Id.ToString())).ToListAsync();
+           
+            //if (sPackages.Count == 0)
+            //    return null; //TODO: return with no record to be saved
+            foreach (Package p in sPackages)
+            {
+                Package packageToCopy = new Package();
+                packageToCopy.Name = p.Name;
+                packageToCopy.Description = p.Description;
+                packageToCopy.Weight = p.Weight;
+                packageToCopy.Status = p.Status;
+                packageToCopy.CampaignId = dCampaignId;  // assign to destination Campaign Id
+                packageToCopy.CreatedBy = userName;
+                packageToCopy.CreatedDate = DateTime.Now;
+                await _context.Package.AddAsync(packageToCopy);
+            }
+            await _context.SaveChangesAsync();
+            return sPackages;
+        }
+
 
     }
 }

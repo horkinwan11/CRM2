@@ -1,5 +1,6 @@
 ﻿
 
+
 function packageList() {
     var campaignId = $('#hidCampaignId').val();
 
@@ -32,7 +33,7 @@ function packageNew() {
             $('#packageModal').modal();
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert("Package Data failed to load: " + jqXHR.responseText);
+            alert("Create Package Modal Form failed to load: " + jqXHR.responseText);
         }
     });
 }
@@ -45,19 +46,65 @@ function packageEdit(Id) {
             $('#packageModal').modal();
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert("Package Data failed to load: " + jqXHR.responseText);
+            alert("Edit Package Modal Form failed to load: " + jqXHR.responseText);
         }
     });
 }
 
+function packageDelete(Id) {
+    var packageName = $('#tdN_' + Id).text().trim();
+    var flag = confirm('Are you sure you want to delete package record - ' + packageName + ' ?'); 
+ 
+    if (flag) {
+        $.ajax({
+            type: "Post",
+            url: '/Package/Delete/' + Id, // The method name + paramater
+            success: function (data) {
+                alert("Package data deleted succesfully");
+                packageList();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Package data failed to be deleted: " + jqXHR.responseText);
+            }
+        });
+    }
+}
+
+function packageCopy() {
+    var campaignId = $("#hidCampaignId").val();
+
+    $.ajax({
+        type: "Post",
+        url: '/Package/PackageCopyModalPage',
+        data: { campaignId: campaignId },
+        success: function (data) {
+            $('#modalWrapper').html(data); // This should be an empty div where you can inject your new html (the partial view)
+            $('#packageModal').modal();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert("Create Package Modal Form failed to load: " + jqXHR.responseText);
+        }
+    });
+}
 $(document).ready(function () {
    
     $('#btnModalSave').click(function () {
         //var packageId = $('#Id').val();
         var campaignId = $("#hidCampaignId").val();
         var url = '/Package/ProcessPackageModalPage';
+        var actionId = $("#hidAction").val();
+        if (typeof actionId === "undefined")
+            actionId = "";
 
-        var frmdata = $("#myForm").serialize();
+        var frmdata;
+        switch (actionId) {
+            case "COPY":
+                url = '/Package/ProcessCopyPackageModalPage';
+                frmdata = $("#myForm2").serialize();
+                break;
+            default:
+                frmdata = $("#myForm").serialize();
+        } 
         var frmdata1 = frmdata + "&campaignId=" + campaignId;
         $.ajax({
             type: "Post",
@@ -75,14 +122,6 @@ $(document).ready(function () {
         });
     });
 
-    $('#sidebarCollapse').on('click', function () {
-        $('#sidebar').toggleClass('active');
-    });
-
-});
-
-$("#menu-toggle").click(function (e) {
-    e.preventDefault();
-    $("#wrapper").toggleClass("toggled");
+   
 });
 

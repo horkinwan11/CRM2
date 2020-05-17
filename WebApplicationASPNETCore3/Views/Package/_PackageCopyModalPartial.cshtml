@@ -1,0 +1,71 @@
+@using System.Web.Helpers
+<link href="~/css/package2.css" rel="stylesheet">
+<script src="~/js/package2.js"></script>
+
+<div>
+    <form id="myForm2">
+        @Html.AntiForgeryToken()
+        @Html.Hidden("hidAction", "COPY")
+
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    Source Campaign : @Html.DropDownList("sc", ViewBag.CampaignList as List<SelectListItem>, "---Select---", new { onchange = "CampaignChanged()" })
+                </div>
+            </div>
+
+            <div id="lblDBXP" class="col-md-10">Source Package</div>
+            <button id="selectedDBXP" aria-expanded="false" aria-labelledby="lblDBXP DBXPList" onclick="return DBXPclick(event);">
+                <span id="DBXPList"></span>
+                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </button>
+            <fieldset aria-labelledby="lblDBXP">
+                <div id="choicelist">
+                    <label><input onclick="CheckAll('group1', this);" type="checkbox" /> All</label>
+                    <fieldset id="group1">
+                        @*<div><input value="300" type="checkbox" name="ENG101"> English</div>
+                        <div><input value="500" type="checkbox" name="SCI101"> Science</div>
+                        <div><input value="755" type="checkbox" name="CLE101"> Christian Living</div>*@
+                    </fieldset>
+                </div>
+            </fieldset>
+
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+
+//$(document).ready(function () {
+//    var options = [];
+//    alert('HI');
+//    $('.dropdown-menu a').on('click', function (event) {
+
+//        var $target = $(event.currentTarget),
+//            val = $target.attr('data-value'),
+//            $inp = $target.find('input'),
+//            idx;
+
+//        if ((idx = options.indexOf(val)) > -1) {
+//            options.splice(idx, 1);
+//            setTimeout(function () { $inp.prop('checked', false) }, 0);
+//        } else {
+//            options.push(val);
+//            setTimeout(function () { $inp.prop('checked', true) }, 0);
+//        }
+
+//        $(event.target).blur();
+
+//        console.log(options);
+//        return false;
+//    });
+
+
+//});
+
+
+</script>
+
+
+

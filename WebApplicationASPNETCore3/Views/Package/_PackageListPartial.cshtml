@@ -32,7 +32,7 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Id)
                         </td>
-                        <td>
+                        <td id="tdN_@item.Id">
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
                         <td>
@@ -59,8 +59,7 @@
         </table>
         <br />
         <button onclick="packageNew()" class="btn btn-primary">Add</button>
-
+        <button onclick="packageCopy()" class="btn btn-primary">Copy Packages</button>
 
     </div>
 </div>
-

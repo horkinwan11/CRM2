@@ -1,0 +1,11 @@
+.btn-group__multiple input {margin: 0 4px 0 0; padding: 0; position: relative; top: 1px;}
+.btn-group__multiple ul li {position: relative;}
+.btn-group__multiple ul label { position: relative; z-index: 1; }
+.btn-group__multiple ul input { margin-top: -8.5px; position: absolute; z-index: 0; top: 50%; }
+.btn-group__multiple .dropdown-menu label {padding-left: 20px;}
+.btn-group__multiple label::selection { background-color: transparent; }
+.btn-group__multiple .btn-placeholder span[data-value]:after { content: ', ';}
+.btn-group__multiple .btn-placeholder span[data-value].last-visible:after { content: '';}
+.btn-group__multiple-radio .num { display: none; }
+.btn-group__multiple > .btn {width: 200px; overflow: hidden;}
+.btn-group__multiple .dropdown-menu {min-width: 100%;}
