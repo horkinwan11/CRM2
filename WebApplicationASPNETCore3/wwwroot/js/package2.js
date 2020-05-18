@@ -2,7 +2,8 @@
 
 function CampaignChanged()
 {
-    var sCampaignId = $("#sc").val();
+    var campaignId = $("#hidCampaignId").val(); //target campaign Id
+    var sCampaignId = $("#sc").val(); //source campaign Id
     $.ajax({
         type: "Post",
         url: '/Package/PackageCopyModalPageGetPackages/' + sCampaignId,
@@ -12,7 +13,7 @@ function CampaignChanged()
             $.each(JSON.parse(result), function (i, package) {
                 //$("#State").append('<option value="' + state.Value + '">' +
                     //state.Text + '</option>');
-                $("#group1").append('<div>&nbsp<input value="' + package.Value + '" type="checkbox" name="' + 'sp' + '">' +
+                $("#group1").append('<div>&nbsp<input value="' + package.Value + '" type="checkbox" id="sp" name="' + 'sp' + '">' +
                     package.Text + '</div >');
 
             });

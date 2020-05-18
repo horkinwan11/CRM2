@@ -195,36 +195,37 @@ namespace CRM.Controllers
             {
                 return BadRequest("Bad request Package Id");
             }
-            if (campaignId > 0)
+            if (campaignId > 0)  
             {
                 campaigns = await _campaignService.GetCampaign();
-                ViewBag.CampaignList = campaigns.Select(m => new SelectListItem { Text = m.Name, Value = m.Id.ToString() }).ToList();
+                ViewBag.CampaignList = campaigns.Where(m=> m.Id != campaignId ).Select(m => new SelectListItem { Text = m.Name, Value = m.Id.ToString() }).ToList();
+                //select only all except target Campaign Id
             }
 
             return PartialView("_PackageCopyModalPartial");
         }
 
 
-        public async Task<IActionResult> PackageCopyModalPageIndex()
-        {
-    //        List<SelectListItem> CountryList = new List<SelectListItem>
-    //{
-    //    new SelectListItem{Text="India",Value="1"},
-    //    new SelectListItem{Text="United States",Value="2"},
-    //    new SelectListItem{Text="Australia",Value="3"},
-    //    new SelectListItem{Text="South Africa",Value="4"},
-    //    new SelectListItem{Text="China",Value="5"}
-    //};
-            List<Campaign> campaigns = await _campaignService.GetCampaign();
+    //    public async Task<IActionResult> PackageCopyModalPageIndex()
+    //    {
+    ////        List<SelectListItem> CountryList = new List<SelectListItem>
+    ////{
+    ////    new SelectListItem{Text="India",Value="1"},
+    ////    new SelectListItem{Text="United States",Value="2"},
+    ////    new SelectListItem{Text="Australia",Value="3"},
+    ////    new SelectListItem{Text="South Africa",Value="4"},
+    ////    new SelectListItem{Text="China",Value="5"}
+    ////};
+    //        List<Campaign> campaigns = await _campaignService.GetCampaign();
 
-            ViewBag.CountryList = campaigns.Select( m => new SelectListItem { Text = m.Name, Value = m.Id.ToString() });
-            return View();
-        }
+    //        ViewBag.CountryList = campaigns.Select( m => new SelectListItem { Text = m.Name, Value = m.Id.ToString() });
+    //        return View();
+    //    }
 
         public async Task<string> PackageCopyModalPageGetPackages(int? id)
         {
            
-            int campaignId = id.GetValueOrDefault();
+            int campaignId = id.GetValueOrDefault(); //source campaign Id
             List<Package> packages = await _packageService.GetPackageByCampaignId(campaignId);
             List<SelectListItem> packageList = packages.Select(m => new SelectListItem { Text = m.Name, Value = m.Id.ToString() }).ToList();
             

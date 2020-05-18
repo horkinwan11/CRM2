@@ -101,6 +101,11 @@ $(document).ready(function () {
             case "COPY":
                 url = '/Package/ProcessCopyPackageModalPage';
                 frmdata = $("#myForm2").serialize();
+                if (frmdata.search("&sp=") == -1)  //validate any checkbox click or not
+                    {
+                    alert('No selection made.');
+                    return;
+                    }
                 break;
             default:
                 frmdata = $("#myForm").serialize();
