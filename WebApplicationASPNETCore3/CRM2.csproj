@@ -16,17 +16,18 @@
     <Content Remove="Views\Customer\Index - with collapse sidebar.cshtml" />
     <Content Remove="Views\TestSideBar\Index - Copy (2).cshtml" />
     <Content Remove="Views\TestSideBar\Index - Copy.cshtml" />
+    <Content Remove="Views\TestSideBar\Index - Editable table and dropdown with Select All checkbox.cshtml" />
     <Content Remove="Views\TestSideBar\Index ElaAdmin-master.cshtml" />
     <Content Remove="Views\TestSideBar\Index.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Views\TestSideBar\Index - Copy (2).cshtml" />
+    <None Include="Views\TestSideBar\Index - Editable table and dropdown with Select All checkbox.cshtml" />
     <None Include="Views\TestSideBar\Index - Copy.cshtml" />
     <None Include="Views\TestSideBar\Index.cshtml" />
     <None Include="Views\TestSideBar\Index ElaAdmin-master.cshtml" />
     <None Include="Views\TestSideBar\Index_orig.cshtml" />
-    <None Include="wwwroot\js\testsidebar.css" />
   </ItemGroup>
 
   <ItemGroup>

@@ -125,11 +125,16 @@ namespace CRM.Services.ViewModels
                 _searchString = searchString.Trim();
             }
             int numRecords = await _context.Campaign
-                 // .Where(m=> m.Name.Contains(_searchString)
+                  .Where(m=> m.Name.IndexOf(_searchString, StringComparison.InvariantCultureIgnoreCase) > -1 || m.Description.IndexOf(_searchString, StringComparison.InvariantCultureIgnoreCase) > -1)
                  .CountAsync();
 
+            //if (numRecords > 0 && numRecords < pageSize && currentPage > 1) // got records but less than page size, and current page at > 1
+            //    { 
+            //        offset = 0;
+            //        currentPage = 1; //reset to first page
+            //    }
             List<Campaign> campaigns = await _context.Campaign
-                // .Where(m=> m.Name.Contains(_searchString)
+                 .Where(m=> m.Name.IndexOf(_searchString,StringComparison.InvariantCultureIgnoreCase) > -1 || m.Description.IndexOf(_searchString, StringComparison.InvariantCultureIgnoreCase) > -1)
                 .Skip(offset).Take(pageSize).ToListAsync();
 
 

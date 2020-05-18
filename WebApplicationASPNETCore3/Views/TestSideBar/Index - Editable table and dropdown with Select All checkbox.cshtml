@@ -97,22 +97,22 @@
             </tr>
         </tbody>
     </table>
-
+    
     <form id="myForm2">
         <div id="lblDBXP">Which of the following Relational Database Management Systems (RDBMS) are you experienced with?</div>
         <button id="selectedDBXP" aria-expanded="false" aria-labelledby="lblDBXP DBXPList" onclick="return DBXPclick(event);">
             <span id="DBXPList"></span>
             <i class="fa fa-chevron-down" aria-hidden="true"></i>
         </button>
-
+       
         <fieldset aria-labelledby="lblDBXP">
             <div id="choicelist">
-
+                
                 <label><input onclick="CheckAll('group1', this);" type="checkbox" /> Group A</label>
                 <fieldset id="group1">
                     <div><input type="text" name="FirstName" value="Mickey"></div>
                     <div><input type="checkbox" name="Check" value="Yes"></div>
-                    <div class="wanhorkin"><input value="300" type="checkbox" name="ENG101"> English</div>
+                    <div class="wanhorkin" ><input value="300" type="checkbox" name="ENG101" > English</div>
                     <div><input value="500" type="checkbox" name="SCI101"> Science</div>
                     <div><input value="755" type="checkbox" name="CLE101"> Christian Living</div>
                 </fieldset>
@@ -131,63 +131,13 @@
     </form>
 
 </div>
-<!-- start -->
-<link href="~/lib/multi-select/css/multi-select.css" rel="stylesheet">
-<div class="container">
-    <div class="page-header" id="demos">
-        <h1>Pre-selected-options</h1>
-        <select id='pre-selected-options' multiple='multiple'>
-            <option value='elem_1' selected>elem 1</option>
-            <option value='elem_2'>elem 2</option>
-            <option value='elem_3'>elem 3</option>
-            <option value='elem_4' selected>elem 4</option>
-            <option value='elem_100'>elem 100</option>
-        </select>
-    </div>
-</div>
-        <!-- ends -->
-        <script src="~/js/jquery.tabledit.min.js"></script>
-        <script src="~/js/TestSideBar.js"></script>
-        <script src="~/js/jquery.quicksearch.js"></script>
-        <script src="~/lib/multi-select/js/jquery.multi-select.js"></script>
 
-        <script type="text/javascript">
+<script src="~/js/jquery.tabledit.min.js"></script>
+<script src="~/js/TestSideBar.js"></script>
 
-     $('#pre-selected-options').multiSelect({
-  selectableHeader: "<div><input type='text' class='search-input' autocomplete='off' placeholder='try \"12\"'></div>",
-  selectionHeader: "<div><input type='text' class='search-input' autocomplete='off' placeholder='try \"4\"'></div>",
-  afterInit: function(ms){
-    var that = this,
-        $selectableSearch = that.$selectableUl.prev(),
-        $selectionSearch = that.$selectionUl.prev(),
-        selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
-        selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
+<script type="text/javascript">
+    
 
-    that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
-    .on('keydown', function(e){
-      if (e.which === 40){
-        that.$selectableUl.focus();
-        return false;
-      }
-    });
-
-    that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
-    .on('keydown', function(e){
-      if (e.which == 40){
-        that.$selectionUl.focus();
-        return false;
-      }
-    });
-  },
-  afterSelect: function(){
-    this.qs1.cache();
-    this.qs2.cache();
-  },
-  afterDeselect: function(){
-    this.qs1.cache();
-    this.qs2.cache();
-  }
-});
 
         //var obj = '{ "1": "Black Widow", "2": "Captain America", "3": "Iron Man" }';
 
@@ -242,6 +192,6 @@
             }
         });
 
+    
 
-
-        </script>
+</script>

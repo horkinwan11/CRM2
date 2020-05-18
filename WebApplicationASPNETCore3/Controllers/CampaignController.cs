@@ -31,17 +31,24 @@ namespace CRM.Controllers
             _ezAuth = ezAuth;
             _ezSession = ezSession;
         }
-
-        public async Task<IActionResult> Index(bool hasError, int? currentPage, int? pageSize)
+        public async Task<IActionResult> Index()
         {
-            int _currentPage = currentPage == null ? 1 : currentPage.GetValueOrDefault();
-            int _pageSize = pageSize == null ? 10 : pageSize.GetValueOrDefault();
-           
+            int _currentPage = 1;
+            int _pageSize = 10;
             CampaignPagination campaignPagination = await _campaignService.GetPaginatedResult(null, _currentPage, _pageSize);
 
             return View(campaignPagination);
         }
+        public async Task<IActionResult> LoadCampaignList(int? currentPage, int? pageSize, string searchText )
+        {
+            int _currentPage = currentPage == null ? 1 : currentPage.GetValueOrDefault();
+            int _pageSize = pageSize == null ? 10 : pageSize.GetValueOrDefault();
+           
+            CampaignPagination campaignPagination = await _campaignService.GetPaginatedResult(searchText, _currentPage, _pageSize);
 
+            return PartialView("_CampaignListPartial",campaignPagination);
+        }
+        
 
         public ActionResult GetCampaignList()
         {

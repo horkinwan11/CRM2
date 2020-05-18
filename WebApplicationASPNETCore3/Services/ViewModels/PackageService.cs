@@ -95,7 +95,7 @@ namespace CRM.Services.ViewModels
         public async Task<List<Package>> CopyMultiPackages(string userName, int? campaignId, int? sc, string[] sp)
         {
             int dCampaignId = campaignId.GetValueOrDefault();
-
+            //find all source Campaign Id = sc && package Id in sp list.
             List<Package> sPackages = await _context.Package.Where(m => m.CampaignId == sc.GetValueOrDefault() && sp.Contains(m.Id.ToString())).ToListAsync();
            
             //if (sPackages.Count == 0)

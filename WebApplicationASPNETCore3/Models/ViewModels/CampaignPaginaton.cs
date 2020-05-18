@@ -9,7 +9,8 @@ namespace CRM.Models.ViewModels
 
 		public List<Campaign> Campaigns { get; set; }  //Campaigns List
 
-		public Pager Pager { get; set; } 
+		public string SearchText { get; set; }
+	public Pager Pager { get; set; } 
 		
 		
 	}
