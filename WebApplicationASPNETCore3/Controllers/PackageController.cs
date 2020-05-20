@@ -205,23 +205,6 @@ namespace CRM.Controllers
             return PartialView("_PackageCopyModalPartial");
         }
 
-
-    //    public async Task<IActionResult> PackageCopyModalPageIndex()
-    //    {
-    ////        List<SelectListItem> CountryList = new List<SelectListItem>
-    ////{
-    ////    new SelectListItem{Text="India",Value="1"},
-    ////    new SelectListItem{Text="United States",Value="2"},
-    ////    new SelectListItem{Text="Australia",Value="3"},
-    ////    new SelectListItem{Text="South Africa",Value="4"},
-    ////    new SelectListItem{Text="China",Value="5"}
-    ////};
-    //        List<Campaign> campaigns = await _campaignService.GetCampaign();
-
-    //        ViewBag.CountryList = campaigns.Select( m => new SelectListItem { Text = m.Name, Value = m.Id.ToString() });
-    //        return View();
-    //    }
-
         public async Task<string> PackageCopyModalPageGetPackages(int? id)
         {
            

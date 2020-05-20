@@ -1,6 +1,6 @@
 @{
     var tabId = ViewBag.tabId == null ? "0": ViewBag.tabId;
-    var campaignId = ViewBag.CampaignId == null ? "0": ViewBag.CampaignId;
+    var campaignId = ViewBag.CampaignId == null ? "0": ViewBag.CampaignId.ToString();
     var campaignName = ViewBag.CampaignName == null ? "??": ViewBag.campaignName;
 
    
@@ -12,21 +12,33 @@
         <li class="nav-item">
             @*@Html.ActionLink("Detail", "Edit", "Campaign", new { id = campaignId }, new { @class = "nav-link (tabId =='0' ?'active'':'' "})*@
             @*<a class="nav-link @(tabId =="0" ?"active":"") " asp-controller="Campaign" asp-action="Edit" asp-route-tabId="0" asp-route-campaignId="@campaignId">Details</a>*@
-            <a class="nav-link @(tabId =="0" ?"active":"") " href="/Campaign/Edit/@campaignId">Details</a>
+            <a onclick="return CheckTab(0,'@campaignId');" class="nav-link @(tabId =="0" ?"active":"") " href="/Campaign/Edit/@campaignId">Details</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link @(tabId =="1" ?"active":"")" asp-controller="Package" asp-action="Index" asp-route-tabId="1"  asp-route-campaignId="@campaignId" asp-route-campaignName="@campaignName">Packages</a>
+            <a onclick="return CheckTab(1,'@campaignId');" class="nav-link @(tabId =="1"  ?"active":"")" asp-controller="Package" asp-action="Index" asp-route-tabId="1"  asp-route-campaignId="@campaignId" asp-route-campaignName="@campaignName">Packages</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link @(tabId =="2" ?"active":"") " asp-controller="Status" asp-action="Index" asp-route-tabId="2" asp-route-campaignId="@campaignId" asp-route-campaignName="@campaignName">Status Codes</a>
+            <a onclick="return CheckTab(2,'@campaignId');" class="nav-link @(tabId =="2"  ?"active":"") " asp-controller="Status" asp-action="Index" asp-route-tabId="2" asp-route-campaignId="@campaignId" asp-route-campaignName="@campaignName">Status Codes</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link @(tabId =="3" ?"active":"") " asp-controller="CustomerUploadData" asp-action="Index" asp-route-tabId="3" asp-route-campaignId="@campaignId" asp-route-campaignName="@campaignName">Customer Upload Data</a>
+            <a onclick="return CheckTab(4,'@campaignId');" class="nav-link @(tabId =="3"  ?"active":"") " asp-controller="CustomerUploadData" asp-action="Index" asp-route-tabId="3" asp-route-campaignId="@campaignId" asp-route-campaignName="@campaignName">Customer Upload Data</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link @(tabId =="4" ?"active":"") " asp-controller="TeamDistribution" asp-action="Index" asp-route-tabId="4" asp-route-campaignId="@campaignId" asp-route-campaignName="@campaignName">Team Distribution</a>
+            <a onclick="return CheckTab(4,'@campaignId');" class="nav-link @(tabId =="4"  ?"active":"") " asp-controller="TeamDistribution" asp-action="Index" asp-route-tabId="4" asp-route-campaignId="@campaignId" asp-route-campaignName="@campaignName">Team Distribution</a>
         </li>
     </ul>
 <input type="hidden" value="@campaignId" id="hidCampaignId" />
     <br />
 
+<script type="text/javascript">
+    
+    function CheckTab(tabId, campaignId)
+    {
+        //validate campaignId ==0 before move to another tab
+        if (campaignId == "0" && tabId > 0)
+        {
+            alert('Please save campaign details first.');
+            return false;
+        }
+    }
+</script>

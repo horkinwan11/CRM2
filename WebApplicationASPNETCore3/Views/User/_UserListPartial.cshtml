@@ -1,0 +1,115 @@
+@model CRM.Models.ViewModels.UserPagination
+
+
+    <div class="row">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div id="userList" class="col-lg-12">
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.SearchText, new { htmlAttributes = new { @class = "form-control" } })
+                <div class="input-group-append"><button onclick="userSearch();" class="btn btn-secondary" type="button"><i class="fa fa-search"></i></button></div>
+            </div>
+            <br />
+           
+            <table id="tblUsers" class="display table">
+                <thead>
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            First Name
+                        </th>
+                        <th>
+                            Last Name
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th>
+                            Team Lead
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.Users)
+                    {
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td id="tdN_@item.Id">
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsTeamLead)
+                            </td>
+                            <td>
+                                <button onclick="userEdit(@item.Id)" class="btn btn-primary">Edit</button>
+                                <button onclick="userChangePassword(@item.Id)" class="btn btn-secondary">Password</button>
+                                <button onclick="userDelete(@item.Id)" class="btn btn-danger">Delete</button>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <br />
+
+
+            <!-- pager -->
+            @if (Model.Pager.EndPage > 1)
+            {
+                <ul class="pagination">
+                    @if (Model.Pager.CurrentPage > 1)
+                    {
+                        <li>
+                            <a onclick="userSearch(1);" href="#" class="page-link">First</a>
+                        </li>
+                        <li>
+                            <a onclick="userSearch(@(Model.Pager.CurrentPage - 1));" href="#" class="page-link">Previous</a>
+                        </li>
+                    }
+
+                    @for (int p = Model.Pager.StartPage; p <= Model.Pager.EndPage; p++)
+                    {
+                        <li class="page-item @(p == Model.Pager.CurrentPage ? "active" : "")">
+                            <a onclick="userSearch(@p);" href="#" class="page-link">@p</a>
+                        </li>
+                    }
+
+                    @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+                    {
+                        <li>
+                            <a onclick="userSearch(@(Model.Pager.CurrentPage + 1));" href="#" class="page-link">Next</a>
+
+                        </li>
+                        <li>
+                            <a onclick="userSearch(@(Model.Pager.TotalPages));" href="#" class="page-link">Last</a>
+
+                        </li>
+                    }
+                </ul>
+            }
+
+            <input type="hidden" id="cp_pageSize" value="@Model.Pager.PageSize">
+            <input type="hidden" id="cp_currentPage" value="@Model.Pager.CurrentPage">
+
+        </div>
+    </div>
+
+

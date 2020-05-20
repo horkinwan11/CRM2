@@ -50,12 +50,12 @@ namespace CRM.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(UserManagementCreate model)
-        {
-            if (ModelState.IsValid)
-            {
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Create(UserManagementCreate model)
+		{
+			if (ModelState.IsValid)
+			{
 				var user = new User()
 				{
 					FirstName = model.FirstName,
@@ -75,55 +75,55 @@ namespace CRM.Controllers
 
 				_context.Add(user);
 				await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            return View(model);
-        }
+				return RedirectToAction("Index");
+			}
+			return View(model);
+		}
 
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+		public async Task<IActionResult> Edit(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
 
-            var user = await _context.User.SingleOrDefaultAsync(m => m.Id == id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            return View(user);
-        }
+			var user = await _context.User.SingleOrDefaultAsync(m => m.Id == id);
+			if (user == null)
+			{
+				return NotFound();
+			}
+			return View(user);
+		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FirstName,LastName,Email")] User model)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
+		public async Task<IActionResult> Edit(int id, [Bind("FirstName,LastName,Email")] User model)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
 					var user = await _context.User.SingleOrDefaultAsync(m => m.Id == id);
 					await TryUpdateModelAsync(user);
 					await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction("Index");
-            }
-            return View(model);
-        }
+				}
+				catch (DbUpdateConcurrencyException)
+				{
+					if (!UserExists(id))
+					{
+						return NotFound();
+					}
+					else
+					{
+						throw;
+					}
+				}
+				return RedirectToAction("Index");
+			}
+			return View(model);
+		}
 
-        public async Task<IActionResult> Delete(int? id)
+		public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {

@@ -3,39 +3,42 @@
 
 <div class="row">
     <div id="campaignList" class="col-lg-12">
-        <div>
-            @Html.TextBoxFor(model => model.SearchText)
-            <button onclick="campaignSearch();" class="btn btn-primary"><i class="fa fa-search"></i></button>
+        <div class="input-group">
+            @Html.TextBoxFor(model => model.SearchText, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="input-group-append">
+                <button onclick="campaignSearch();" class="btn btn-secondary"><i class="fa fa-search"></i></button>
+            </div>
         </div>
         <br />
+     
         <table id="tblCampaigns" class="display table">
-            <thead>
-                <tr>
-                    <th>
-                        Id
-                    </th>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        Description
-                    </th>
-                    <th>
-                        Start Date
-                    </th>
-                    <th>
-                        End Date
-                    </th>
-                    <th>
-                        Status
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
+                <thead>
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Start Date
+                        </th>
+                        <th>
+                            End Date
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                @foreach (var item in Model.Campaigns)
-                {
+                    @foreach (var item in Model.Campaigns)
+                    {
 
                     <tr>
                         <td>
@@ -57,56 +60,56 @@
                             @Html.DisplayFor(modelItem => item.Status)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id , @class = "btn btn-primary" }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id , @class = "btn btn-danger" })
                         </td>
 
                     </tr>
-                }
-            </tbody>
-        </table>
-        <br />
+                    }
+                </tbody>
+            </table>
+            <br />
 
 
-        <!-- pager -->
-        @if (Model.Pager.EndPage > 1)
-        {
-            <ul class="pagination">
-                @if (Model.Pager.CurrentPage > 1)
-                {
-                    <li>
-                        <a onclick="campaignSearch(1);" href="#" class="page-link">First</a>
-                    </li>
-                    <li>
-                        <a onclick="campaignSearch(@(Model.Pager.CurrentPage - 1));" href="#" class="page-link">Previous</a>
-                    </li>
-                }
+            <!-- pager -->
+            @if (Model.Pager.EndPage > 1)
+            {
+                <ul class="pagination">
+                    @if (Model.Pager.CurrentPage > 1)
+                    {
+                        <li>
+                            <a onclick="campaignSearch(1);" href="#" class="page-link">First</a>
+                        </li>
+                        <li>
+                            <a onclick="campaignSearch(@(Model.Pager.CurrentPage - 1));" href="#" class="page-link">Previous</a>
+                        </li>
+                    }
 
-                @for (int p = Model.Pager.StartPage; p <= Model.Pager.EndPage; p++)
-                {
-                    <li class="page-item @(p == Model.Pager.CurrentPage ? "active" : "")">
-                        <a onclick="campaignSearch(@p);" href="#" class="page-link">@p</a>
-                    </li>
-                }
+                    @for (int p = Model.Pager.StartPage; p <= Model.Pager.EndPage; p++)
+                    {
+                        <li class="page-item @(p == Model.Pager.CurrentPage ? "active" : "")">
+                            <a onclick="campaignSearch(@p);" href="#" class="page-link">@p</a>
+                        </li>
+                    }
 
-                @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
-                {
-                    <li>
-                        <a onclick="campaignSearch(@(Model.Pager.CurrentPage + 1));" href="#" class="page-link">Next</a>
+                    @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+                    {
+                        <li>
+                            <a onclick="campaignSearch(@(Model.Pager.CurrentPage + 1));" href="#" class="page-link">Next</a>
 
-                    </li>
-                    <li>
-                        <a onclick="campaignSearch(@(Model.Pager.TotalPages));" href="#" class="page-link">Last</a>
+                        </li>
+                        <li>
+                            <a onclick="campaignSearch(@(Model.Pager.TotalPages));" href="#" class="page-link">Last</a>
 
-                    </li>
-                }
-            </ul>
-        }
+                        </li>
+                    }
+                </ul>
+            }
 
-        @*<input type="hidden" id="cp_pageSize" value="@Model.Pager.PageSize">
-        <input type="hidden" id="cp_currentPage" value="@Model.Pager.CurrentPage">*@
+            @*<input type="hidden" id="cp_pageSize" value="@Model.Pager.PageSize">
+            <input type="hidden" id="cp_currentPage" value="@Model.Pager.CurrentPage">*@
 
+        </div>
     </div>
-</div>
 
 

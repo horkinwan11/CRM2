@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CRM.Models.ViewModels
 {
-	public class UserManagementCreate : UserManagementChangePassword
+	public class UserManageViewModel : UserManagePasswordViewModel
 	{
 		[Required, StringLength(50, MinimumLength = 2)]
 		[Display(Name = "First Name")]
@@ -16,10 +16,16 @@ namespace CRM.Models.ViewModels
 		[Required, EmailAddress, StringLength(100)]
 		public string Email { get; set; }
 
+		
+		public ItemStatus Status { get; set; }
+		
+		public bool IsTeamLead { get; set; }
 	}
 
-	public class UserManagementChangePassword
+	public class UserManagePasswordViewModel
 	{
+		public int Id { get; set; }
+
 		[Required, StringLength(15, MinimumLength = 6)]
 		[DataType(DataType.Password)]
 		public string Password { get; set; }

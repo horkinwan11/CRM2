@@ -17,6 +17,9 @@ namespace CRM.Models.Entities
         public string LastName { get; set; }
         public string Email { get; set; }
         public int? LastWKCampaignId { get; set; }
+        public ItemStatus Status { get; set; }
+
+        public bool IsTeamLead { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
