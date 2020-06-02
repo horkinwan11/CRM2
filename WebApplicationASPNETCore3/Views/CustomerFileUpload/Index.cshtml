@@ -1,0 +1,109 @@
+@model CRM.Models.ViewModels.CustomerFileUploadViewModel
+
+
+@{
+    ViewBag.Title = "Customer CSV File Upload";
+}
+
+
+<div class="row">
+    <div class="panel-heading">
+        <div class="col-md-8">
+            <h3>
+                <i class="fa fa-file-text-o"></i>
+                <span>Customer CSV File Upload</span>
+            </h3>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div class="row">
+    <div class="col-md-6 col-md-push-2">
+        <section>
+            @using (Html.BeginForm("Index", "CustomerFileUpload", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+            <div class="well bs-component">
+                <br />
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <span class="btn btn-default btn-file">
+                                        @Html.TextBoxFor(m => m.FileAttach, new { type = "file", placeholder = Html.DisplayNameFor(m => m.FileAttach), @class = "input-group-append" })
+                                    </span>
+                                </span>
+                               
+                            </div>
+                            @Html.ValidationMessageFor(m => m.FileAttach, "", new { @class = "text-danger custom-danger" })
+                        </div>
+
+                    </div>
+                </div>
+
+
+                @Html.HiddenFor(m => m.CampaignId)
+                <div class="form-group">
+                    <div class="col-md-offset-5 col-md-10">
+                        <input type="submit" class="btn btn-danger" value="Upload" />
+                    </div>
+                </div>
+            </div>
+            }
+        </section>
+    </div>
+</div>
+
+<hr />
+
+@if (Model.Data != null &&
+   Model.Data.Rows.Count > 0)
+{
+
+    <div class="input-group" style="height:40px;">
+        <a class="download-file1" href="@Url.Action("DownloadFile", "Home")" target="_blank">
+            <img src="~/Content/img/export.png" alt="Export to CSV" style="width:42px;height:42px;border:0;">
+        </a>
+    </div>
+
+    <hr />
+
+    <div class="row">
+        <div class="col-md-offset-1 col-md-8">
+            <section>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center;">Sr.</th>
+
+                            @*@for (int i = 0; i < Model.Data.Columns.Count; i++)
+                                {
+                                    <th style="text-align: center;">@Model.Data.Columns[i].ColumnName</th>
+                                }*@
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @*@for (int i = 0; i < Model.Data.Rows.Count; i++)
+                            {
+                                <tr>
+                                    <td style="text-align: center;">@(i + 1)</td>
+
+                                    @for (int j = 0; j < Model.Data.Columns.Count; j++)
+                                    {
+                                        <td style="text-align: center;">@Model.Data.Rows[i][j]</td>
+                                    }
+                                </tr>
+                            }*@
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+}
+

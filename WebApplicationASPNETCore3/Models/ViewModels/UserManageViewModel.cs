@@ -20,6 +20,8 @@ namespace CRM.Models.ViewModels
 		public ItemStatus Status { get; set; }
 		
 		public bool IsTeamLead { get; set; }
+
+		public int RoleId { get; set; }
 	}
 
 	public class UserManagePasswordViewModel

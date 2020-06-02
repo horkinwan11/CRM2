@@ -57,6 +57,7 @@ namespace CRM
             services.AddTransient<CampaignService, CampaignService>();
             services.AddTransient<PackageService, PackageService>();
             services.AddTransient<UserService, UserService>();
+            services.AddTransient<TeamDistributionService, TeamDistributionService>();
 
             services.AddSession();
  

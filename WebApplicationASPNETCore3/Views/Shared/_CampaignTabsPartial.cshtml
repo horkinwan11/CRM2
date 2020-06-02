@@ -21,7 +21,7 @@
             <a onclick="return CheckTab(2,'@campaignId');" class="nav-link @(tabId =="2"  ?"active":"") " asp-controller="Status" asp-action="Index" asp-route-tabId="2" asp-route-campaignId="@campaignId" asp-route-campaignName="@campaignName">Status Codes</a>
         </li>
         <li class="nav-item">
-            <a onclick="return CheckTab(4,'@campaignId');" class="nav-link @(tabId =="3"  ?"active":"") " asp-controller="CustomerUploadData" asp-action="Index" asp-route-tabId="3" asp-route-campaignId="@campaignId" asp-route-campaignName="@campaignName">Customer Upload Data</a>
+            <a onclick="return CheckTab(3,'@campaignId');" class="nav-link @(tabId =="3"  ?"active":"") " asp-controller="CustomerFileUpload" asp-action="Index" asp-route-tabId="3" asp-route-campaignId="@campaignId" asp-route-campaignName="@campaignName">Customer File Upload</a>
         </li>
         <li class="nav-item">
             <a onclick="return CheckTab(4,'@campaignId');" class="nav-link @(tabId =="4"  ?"active":"") " asp-controller="TeamDistribution" asp-action="Index" asp-route-tabId="4" asp-route-campaignId="@campaignId" asp-route-campaignName="@campaignName">Team Distribution</a>

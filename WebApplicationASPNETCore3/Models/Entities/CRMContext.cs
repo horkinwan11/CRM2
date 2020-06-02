@@ -21,6 +21,8 @@ namespace CRM.Models.Entities
 		public virtual DbSet<Package> Package { get; set; }
 		public virtual DbSet<Status> Status { get; set; }
 
+		public virtual DbSet<Role> Role { get; set; }
+
 		public virtual DbSet<Customer> Customer { get; set; }
 		public CRMContext(DbContextOptions<CRMContext> options)
 		: base(options)

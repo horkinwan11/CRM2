@@ -15,6 +15,8 @@ namespace CRM.Models
 		public string LastName { get; set; }
 		public string Email { get; set; }
 		public List<string> Permissions { get; set; }
+
+		public string Role { get; set; }
 		public Dictionary<string, string> Claims { get; set; }
 		public DateTime CreatedDate { get; set; }
 

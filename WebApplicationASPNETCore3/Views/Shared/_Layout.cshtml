@@ -51,8 +51,9 @@
                     {
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item"><a class="nav-link text-white" asp-area="" asp-controller="Campaign" asp-action="Index">Campaign</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" asp-area="" asp-controller="UserManagement" asp-action="Index">User Management</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Index">User</a></li>
+                        @*<li class="nav-item"><a class="nav-link text-white" asp-area="" asp-controller="UserManagement" asp-action="Index">User Management</a></li>*@
+                        @if (authInfo.IsInRole("Admin"))
+                        {<li class="nav-item"><a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Index">User</a></li>}
                         <li class="nav-item"><a class="nav-link text-white" asp-area="" asp-controller="Customer" asp-action="Index">Customer</a></li>
                         <li class="nav-item"><a class="nav-link text-white" asp-area="" asp-controller="TestSideBar" asp-action="Index">TestSideBar</a></li>
                     </ul>
@@ -110,7 +111,7 @@
                 <input type="text" class="form-control" placeholder="Recipient's username"
                        aria-label="Recipient's username with two button addons" aria-describedby="button-addon1">
                 <div class="input-group-append" id="button-addon1">
-                    <button class="btn btn-outline-primary" type="button" data-toggle="popover" data-placement="bottom"
+                    <button class="btn btn-outline-primary" t++ype="button" data-toggle="popover" data-placement="bottom"
                             data-html="true" data-title="Search">
                         <i class="fas fa-search"></i>
                     </button>

@@ -84,11 +84,19 @@ namespace CRM.Services
 				return _httpContext.User.Identity.Name;
 			}
 		}
-		
 
+		public bool IsInRole(string Role)
+		{
+			return _httpContext.User.IsInRole(Role);
+		}
+
+		public string GetRole()
+		{
+			return _httpContext.User.Claims.FirstOrDefault(m => m.Type == ClaimTypes.Role).Value;
+		}
 		public async Task<bool> SignIn(string email, string password)
 		{
-			var user = _context.User.Include(u => u.UserCredential).FirstOrDefault(u => u.Email == email); 
+			var user = _context.User.Include(u => u.UserCredential).Include(u => u.Role).FirstOrDefault(u => u.Email == email); 
 			
 			if (user == null) return false;
 
@@ -97,10 +105,15 @@ namespace CRM.Services
 
 			if (claimedPasswordHashed != userCredential.HashedPassword) return false;
 
-			var permissions = _context.UserPermission.Where(up => up.UserId == user.Id)
-									.Select(up => up.Permission.Code).ToList();
+			
 
-			await LoginAsync(user,permissions);
+			//var permissions = _context.UserPermission.Where(up => up.UserId == user.Id)
+			//						.Select(up => up.Permission.Code).ToList();
+
+			//await LoginAsync(user,permissions);
+
+			await LoginAsync(user);
+
 			return true;
 
 			//AuthInfo authInfo = new AuthInfo() {
@@ -155,7 +168,8 @@ namespace CRM.Services
 
 
 
-		private async Task LoginAsync(User user, List<String> permissions)
+		//private async Task LoginAsync(User user, List<String> permissions)
+		private async Task LoginAsync(User user)
 		{
 			var properties = new AuthenticationProperties
 			{
@@ -172,9 +186,10 @@ namespace CRM.Services
 				new Claim(ClaimTypes.Surname, user.LastName),
 				new Claim(ClaimTypes.Name, user.Email )   //Http Identity Name
 		    };
-			
-			foreach (String perm in permissions)
-				claims.Add(new Claim(ClaimTypes.Role, perm));
+
+			//foreach (String perm in permissions)
+			//	claims.Add(new Claim(ClaimTypes.Role, perm));
+			claims.Add(new Claim(ClaimTypes.Role, user.Role.Code));
 
 			var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 			var principal = new ClaimsPrincipal(identity);

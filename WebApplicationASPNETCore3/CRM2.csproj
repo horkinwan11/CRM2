@@ -51,6 +51,7 @@
 
   <ItemGroup>
     <Folder Include="Helper\" />
+    <Folder Include="wwwroot\Content\temp_upload_files\" />
   </ItemGroup>
 
 

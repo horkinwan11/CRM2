@@ -114,11 +114,8 @@ namespace CRM.Controllers
             {
                 return BadRequest("Bad request Package Id");
             }
-            if (ModelState.IsValid)
-            {
-                await _packageService.Delete(_ezAuth.UserName, id.GetValueOrDefault());
-
-            }
+            
+            await _packageService.Delete(_ezAuth.UserName, id.GetValueOrDefault());
 
             return Ok();
         }

@@ -100,7 +100,7 @@ namespace CRM.Controllers
             }
             if (!string.IsNullOrEmpty(wkCampaignId))
             {
-                customerPagination = await _customerService.GetPaginatedResult(_ezAuth.UserName, wkCampaignId, null, currentPage, pageSize);
+                customerPagination = await _customerService.GetPaginatedResult(_ezAuth.UserName, _ezAuth.GetRole(), wkCampaignId, null, currentPage, pageSize);
                 customerPagination.SelectedWKCampaignId = wkCampaignId;
             }
          
@@ -119,7 +119,7 @@ namespace CRM.Controllers
                 return BadRequest("Could not load due to bad input campaign.");
             }
             
-                CustomerPagination customerPagination = await _customerService.GetPaginatedResult(_ezAuth.UserName, SelectedWKCampaignId,  searchString, _currentPage, _pageSize);
+                CustomerPagination customerPagination = await _customerService.GetPaginatedResult(_ezAuth.UserName,_ezAuth.GetRole(), SelectedWKCampaignId,  searchString, _currentPage, _pageSize);
            
             return PartialView("_CustomerListPartial", customerPagination);
         }

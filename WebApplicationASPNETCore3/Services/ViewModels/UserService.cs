@@ -38,7 +38,20 @@ namespace CRM.Services.ViewModels
 
             return Users;
         }
+        public async Task<List<User>> GetTLead()
+        {
 
+            List<User> Users = await _context.User.Where(m=>m.IsTeamLead).ToListAsync();
+
+            return Users;
+        }
+        public async Task<List<User>> GetTMember()
+        {
+
+            List<User> Users = await _context.User.Where(m => ! m.IsTeamLead).ToListAsync();
+
+            return Users;
+        }
 
         public async Task<User> GetUserById(int id)
         {
@@ -73,6 +86,7 @@ namespace CRM.Services.ViewModels
             userToUpdate.FirstName = model.FirstName;
             userToUpdate.LastName = model.LastName;
             userToUpdate.IsTeamLead = model.IsTeamLead;
+            userToUpdate.RoleId = model.RoleId;
             userToUpdate.Status = model.Status;
             userToUpdate.CreatedBy = userName;
             userToUpdate.CreatedDate = DateTime.Now;
@@ -97,6 +111,7 @@ namespace CRM.Services.ViewModels
             userToUpdate.FirstName = model.FirstName;
             userToUpdate.LastName = model.LastName;
             userToUpdate.IsTeamLead = model.IsTeamLead;
+            userToUpdate.RoleId = model.RoleId;
             userToUpdate.Status = model.Status;
             userToUpdate.UpdatedBy = userName;
             userToUpdate.UpdatedDate = DateTime.Now;

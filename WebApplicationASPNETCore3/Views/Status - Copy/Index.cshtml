@@ -1,0 +1,66 @@
+@model IEnumerable<CRM.Models.Entities.Package>
+
+@{
+
+   // ViewData["Title"] = "Campaign";
+}
+<link rel="stylesheet" href="~/css/section.css" />
+
+
+
+<div>@Html.ValidationSummary(true, "", new { @class = "text-danger" })</div>
+
+
+<section>
+
+
+    <aside>
+        <div>
+            @{
+                Html.RenderPartial("../Shared/_CampaignLeftBarMenuPartial");
+            }
+        </div>
+
+
+
+    </aside>
+
+
+    <main>
+        @{
+            Html.RenderPartial("../Shared/_CampaignTabsPartial");
+        }
+        @{
+            if (Model != null)
+            {
+                Html.RenderPartial("_PackageListPartial", Model);
+            }
+        }
+
+    </main>
+
+    <!-- Modal -->
+    <div class="modal fade" id="packageModal" tabindex="-1" role="dialog" aria-labelledby="packageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    @*<h5 class="modal-title" id="packageModalLabel">Package Details</h5>*@
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="modalWrapper" class="modal-body">
+                    @* Inject form here *@
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="btnModalSave" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<script src="~/js/package.js" asp-append-version="true"></script>
+<script src="~/js/package2.js" asp-append-version="true"></script>

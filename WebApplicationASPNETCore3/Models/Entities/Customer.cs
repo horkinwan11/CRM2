@@ -23,10 +23,14 @@ namespace CRM.Models.Entities
 
        public int? CampaignId { get; set; }
        public int? PackageId { get; set; }
-       public int? TeamId { get; set; }
-       public int? StaffId { get; set; }
-       
-       public List<KeyValuePairCls> KPV { get; set; }
+       public int? TLeadId { get; set; }
+
+        public string TLeadName { get; set; }
+        public int? TMemberId { get; set; }
+
+        public string TMemberName { get; set; }
+
+        public List<KeyValuePairCls> KPV { get; set; }
 
 
         //public Dictionary<string, object> Dc { get; set; }

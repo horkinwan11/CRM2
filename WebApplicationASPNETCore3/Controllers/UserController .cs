@@ -2,16 +2,19 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 using CRM.Models.Entities;
 using CRM.Models.ViewModels;
 using CRM.Services;
 using CRM.Services.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CRM.Controllers
 {
-	//[EZAuth(permissions: "Agent")]
-	public class UserController : Controller
+    [Authorize(Roles = "Admin")]
+    public class UserController : Controller
     {
         private readonly CRMContext _context;
         private readonly UserService _userService;
@@ -61,6 +64,7 @@ namespace CRM.Controllers
                 userManageViewModel.LastName = user.LastName;
                 userManageViewModel.Status = user.Status;
                 userManageViewModel.IsTeamLead = user.IsTeamLead;
+                userManageViewModel.RoleId = user.RoleId;
             }
             else
             {  //preset data to model for create form
@@ -69,10 +73,9 @@ namespace CRM.Controllers
                 userManageViewModel.Email = "";
                 userManageViewModel.Password = "";
                 userManageViewModel.IsTeamLead = false;
-                userManageViewModel.Status = ItemStatus.A;  //pre-select Status 
             }
-            
-
+            //List<SelectListItem> packageList = packages.Select(m => new SelectListItem { Text = m.Name, Value = m.Id.ToString() }).ToList();
+            ViewData["Roles"] = await _context.Role.Select(m => new SelectListItem { Text = m.Code, Value = m.Id.ToString() }).ToListAsync();
             return PartialView("_UserDetailModalPartial", userManageViewModel);
         }
 
@@ -97,7 +100,8 @@ namespace CRM.Controllers
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Status = model.Status,
-                IsTeamLead = model.IsTeamLead
+                IsTeamLead = model.IsTeamLead,
+                RoleId = model.RoleId
             };
 
             if (model.Id > 0)

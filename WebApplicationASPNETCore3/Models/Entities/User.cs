@@ -20,6 +20,8 @@ namespace CRM.Models.Entities
         public ItemStatus Status { get; set; }
 
         public bool IsTeamLead { get; set; }
+
+     
         public DateTime? CreatedDate { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
@@ -30,5 +32,10 @@ namespace CRM.Models.Entities
         public virtual ICollection<CampaignTeam> CampaignTeam { get; set; }
 
         public virtual ICollection<CampaignTeamMember> CampaignTeamMember { get; set; }
+
+        
+        //Added for 1 user woth 1 Role
+        public int RoleId { get; set; }
+        public virtual Role Role { get; set; }
     }
 }
